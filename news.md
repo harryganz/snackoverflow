@@ -12,5 +12,5 @@ Planned Features:
 * Members can add/edit/remove recipes 
 * Members can set categories for their recipes
 * Members can add ingredients lists to their recipes
-* Memers can see a list of their recipes
+* Members can see a list of their recipes
   
