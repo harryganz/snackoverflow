@@ -21,6 +21,10 @@ Always wanted to have a BLT but you are vegan or keep kosher? Snack overflow is 
 
 ![ERD](planning/erd/erd.png)
 
+### User Stories
+
+See the [user stories readme](planning/user_stories.md) 
+
 ### Contributing
 
 Fork this repository and hack away. Please look at the [contibuting readme](contributing.md) before making a pull request.
