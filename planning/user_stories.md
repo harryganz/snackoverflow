@@ -19,15 +19,8 @@ A user should ...
 6. be able to sign in
 6. see an uninformative error for an invalid sign in
 7. be able to add/edit/delete a recipe unless signed in
-8. be able to comment on recipes
-9. see comments at bottom of recipe's show page
-10. be able to paginate through comments
-11. be able to delete their own comments
-12. be able to edit their own comments
 13. link to a profile page with their personal information
 14. be able to deactivate their own account
 15. be able to change their password
 16. be able to click on a link on their profile page to see a listing of all their recipes
 16. be able to click on a recipe in the listing and go to its show page
-17. be able to  click on a link on their profile page to see a listing of all their comments
-16. be able to click on a comment in the listing and go to its recipes show page
