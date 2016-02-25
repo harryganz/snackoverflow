@@ -1,0 +1,33 @@
+{
+  "name": "snackoverflow",
+  "version": "0.0.1",
+  "description": "A website for people with specialized diets to share recipes",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha tests/**/*.js",
+    "start": "node server.js"
+  },
+  "jshintConfig": {
+    "node": true,
+    "esversion": 6
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harryganz/snackoverflow.git"
+  },
+  "author": "Harry Ganz <hganz@harryganz.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/harryganz/snackoverflow/issues"
+  },
+  "homepage": "https://github.com/harryganz/snackoverflow#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "ejs": "^2.4.1",
+    "express": "^4.13.4",
+    "morgan": "^1.7.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  }
+}
