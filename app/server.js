@@ -16,8 +16,9 @@ app.use(bodyParser.json());
 
 // Dynamic Routes
 app.get('/', function(req, res){
-  res.render('home/index');
+  res.render('home/index', {page_title: 'Home'});
 });
+app.use('/recipes', require(path.join(__dirname, '/routes/recipes')));
 
 // Static Routes
 app.use(express.static(path.join(__dirname, '/public')));

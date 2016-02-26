@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ../partials/head %>
+<body>
+  <%- include ../partials/header %>
+  <%- include ../partials/nav %>
+
+  <div class="container">
+    <h3>Recipes:</h3>
+    <div class="flexbox">
+      <% recipes.forEach(function(recipe){ %>
+        <a href="/recipes/<%= recipe.id %>">
+          <div class="card">
+            <h3><%= recipe.title %></h3>
+            <p>Author: <%= recipe.user %></p>
+          </div>
+        </a>
+      <% }) %>
+    </div>
+  </div>
+</body>
+</html>
