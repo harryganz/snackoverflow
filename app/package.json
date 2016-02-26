@@ -9,7 +9,9 @@
     "test-watch": "mocha tests/**/*.js -w",
     "dropdb": "dropdb snackoverflow",
     "createdb": "createdb snackoverflow",
-    "schema": "psql -d snackoverflow -f db/schema.sql"
+    "schema": "psql -d snackoverflow -f db/schema.sql",
+    "seeddb": "psql -d snackoverflow -f db/seeds.sql",
+    "resetdb": "npm run dropdb && npm run createdb && npm run schema && npm run seeddb"
   },
   "jshintConfig": {
     "node": true,
