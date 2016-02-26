@@ -22,6 +22,7 @@ BEGIN;
     id SERIAL PRIMARY KEY UNIQUE,
     email VARCHAR(255) NOT NULL,
     username VARCHAR(255) NOT NULL UNIQUE,
+    password_digest VARCHAR(255),
     is_active BOOLEAN DEFAULT TRUE
   );
 
