@@ -1,36 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Snack Overflow | Home</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
-  <link rel="stylesheet" href="/css/shared.css">
-</head>
+<%- include ../partials/head %>
 <body>
-  <div id="header">
-    <div class="container">
-      <div class="one column">
-        <img src="/img/logo.png" alt="logo">
-      </div>
-      <div class="eleven columns">
-        <h1>Snack Overflow</h1>
-      </div>
-    </div>
-  </div>
-  <nav>
-    <div class="container">
-      <div class="ten columns">
-        <ul class="horizontal-menu">
-          <li><a class="menu-link" href="#">Home</a></li>
-          <li><a class="menu-link" href="#">Recipes</a></li>
-        </ul>
-      </div>
-      <div class="two columns">
-        <a href="#" class="button button-primary">Sign-Up</a>
-      </div>
-    </div>
-  </nav>
+  <%- include ../partials/header %>
+  <%- include ../partials/nav %>
 </body>
 </html>
