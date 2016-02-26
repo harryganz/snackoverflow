@@ -16,7 +16,7 @@ app.use(bodyParser.json());
 
 // Dynamic Routes
 app.get('/', function(req, res){
-  res.sendStatus(200);
+  res.render('home/index');
 });
 
 // Static Routes

@@ -1,0 +1,27 @@
+body {
+  font-size: 16px;
+}
+
+h1 {
+  font-size: 2.5em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+#header {
+  padding: 2em 2em;
+  background-color: #000;
+  color: #fff;
+}
+
+#header h1 {
+  margin-left: 1em;
+  margin-top: 0;
+}
+
+#header img {
+  width: 64px;
+  height: 64px;
+}
