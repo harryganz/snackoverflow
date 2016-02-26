@@ -11,9 +11,43 @@ h3 {
   font-size: 1.5em;
 }
 
+
 /* Header Styles */
 #header img {
   height: 60px;
   width: 60px;
-  float: right;
+}
+
+#header h1 {
+  padding-left: 0.5em;
+}
+
+/* Nav styles */
+nav {
+  background-color: #000;
+  color: #fff;
+}
+
+.horizontal-menu {
+  list-style: none;
+  margin: 0.75em 0;
+}
+
+.horizontal-menu li {
+  display: inline;
+}
+
+.menu-link {
+  padding: 0.5em;
+  border-radius: 5%;
+  text-decoration: none;
+  color: #fff;
+}
+
+.menu-link:hover {
+  background-color: #fff;
+}
+
+nav .button {
+  margin: 0.5em 0;
 }
