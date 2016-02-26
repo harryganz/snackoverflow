@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha tests/**/*.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "test-watch": "mocha tests/**/*.js -w"
   },
   "jshintConfig": {
     "node": true,
