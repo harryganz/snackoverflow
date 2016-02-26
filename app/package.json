@@ -6,7 +6,10 @@
   "scripts": {
     "test": "mocha tests/**/*.js",
     "start": "node server.js",
-    "test-watch": "mocha tests/**/*.js -w"
+    "test-watch": "mocha tests/**/*.js -w",
+    "dropdb": "dropdb snackoverflow",
+    "createdb": "createdb snackoverflow",
+    "schema": "psql -d snackoverflow -f db/schema.sql"
   },
   "jshintConfig": {
     "node": true,
