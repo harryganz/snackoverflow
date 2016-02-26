@@ -16,12 +16,29 @@ h3 {
   color: #fff;
 }
 
-#header h1 {
-  margin-left: 1em;
-  margin-top: 0;
+#header img{
+  min-width: 60px;
+  min-height: 60px;
+  display: block;
+  margin: 0 auto;
 }
 
-#header img {
-  width: 64px;
-  height: 64px;
+#header h1 {
+  text-align: center;
+}
+
+@media screen and (min-width: 35.5em){
+  #header h1 {
+    padding-left: 0.25em;
+    text-align: left;
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
+
+  #header img {
+    width: 60px;
+    min-heigth: 60px;
+    display: inline;
+    float: right;
+  }
 }
