@@ -8,24 +8,24 @@ var db = pgp(process.env.DATABASE_URL);
 function listAll(req, res, next){
   var categories = req.query.category;
   var query = `SELECT recipes.id AS id, recipes.title AS title,
-  users.username AS user, ARRAY_AGG(categories.category) AS categories
-      FROM (SELECT recipes.id AS recipeid FROM recipes
-          INNER JOIN categories_recipes_xref AS crx ON
-          crx.recipe_id = recipes.id
-          INNER JOIN categories ON
-          crx.category_id = categories.id
-          ${categories ? 'AND categories.category IN ($1^)' : ''}
-          GROUP BY recipeid) AS rcat
-  INNER JOIN recipes ON
-  recipes.id = rcat.recipeid
-  INNER JOIN categories_recipes_xref AS crx ON
-  crx.recipe_id = recipes.id
-  INNER JOIN categories ON
-  categories.id = crx.category_id
-  INNER JOIN users ON
-  recipes.user_id = users.id
-  WHERE recipes.is_shown
-  GROUP BY recipes.id, recipes.title, users.username;`;
+    users.username AS user, ARRAY_AGG(categories.category) AS categories
+        FROM (SELECT recipes.id AS recipeid FROM recipes
+            INNER JOIN categories_recipes_xref AS crx ON
+            crx.recipe_id = recipes.id
+            INNER JOIN categories ON
+            crx.category_id = categories.id
+            ${categories ? 'AND categories.category IN ($1^)' : ''}
+            GROUP BY recipeid) AS rcat
+    INNER JOIN recipes ON
+    recipes.id = rcat.recipeid
+    INNER JOIN categories_recipes_xref AS crx ON
+    crx.recipe_id = recipes.id
+    INNER JOIN categories ON
+    categories.id = crx.category_id
+    INNER JOIN users ON
+    recipes.user_id = users.id
+    WHERE recipes.is_shown
+    GROUP BY recipes.id, recipes.title, users.username;`;
   db.any(query, pgp.as.csv(categories)).
     then(function(results){
       res.data = results;
@@ -39,26 +39,26 @@ function listAll(req, res, next){
 
 function showRecipe(req, res, next){
   var query = `SELECT rcat.id AS id, rcat.title AS title,
-  rcat.directions AS directions,
-  rcat.user AS user, rcat.categories AS categories,
-  ARRAY_AGG(ingredients.ingredient) AS ingredients
-  FROM (SELECT recipes.id AS id, recipes.title AS title,
-  recipes.directions AS directions, users.username AS user,
-  ARRAY_AGG(categories.category) AS categories
-  FROM recipes INNER JOIN users
-  ON users.id = recipes.user_id
-  INNER JOIN categories_recipes_xref AS crx
-  ON crx.recipe_id = recipes.id
-  INNER JOIN categories
-  ON crx.category_id = categories.id
-  WHERE recipes.id = $1 AND recipes.is_shown
-  GROUP BY recipes.id, recipes.title, recipes.directions, users.username
-) AS rcat
-INNER JOIN ingredients_recipes_xref AS irx
-ON rcat.id = irx.recipe_id
-INNER JOIN ingredients
-ON irx.ingredient_id = ingredients.id
-GROUP BY rcat.id, rcat.title, rcat.directions, rcat.user, rcat.categories;`;
+      rcat.directions AS directions,
+      rcat.user AS user, rcat.categories AS categories,
+      ARRAY_AGG(ingredients.ingredient) AS ingredients
+      FROM (SELECT recipes.id AS id, recipes.title AS title,
+      recipes.directions AS directions, users.username AS user,
+      ARRAY_AGG(categories.category) AS categories
+      FROM recipes INNER JOIN users
+      ON users.id = recipes.user_id
+      LEFT JOIN categories_recipes_xref AS crx
+      ON crx.recipe_id = recipes.id
+      LEFT JOIN categories
+      ON crx.category_id = categories.id
+      WHERE recipes.id = $1 AND recipes.is_shown
+      GROUP BY recipes.id, recipes.title, recipes.directions, users.username
+    ) AS rcat
+    LEFT JOIN ingredients_recipes_xref AS irx
+    ON rcat.id = irx.recipe_id
+    LEFT JOIN ingredients
+    ON irx.ingredient_id = ingredients.id
+    GROUP BY rcat.id, rcat.title, rcat.directions, rcat.user, rcat.categories;`;
 
 db.one(query, req.params.id).then(function(result){
   res.data = result;
@@ -156,30 +156,77 @@ function deleteRecipe(req, res, next){
     });
 }
 
-<<<<<<< Updated upstream
-=======
 function updateRecipe(req, res, next){
+  var recipe_id = req.params.id;
+  var title = req.body.title;
+  var directions = req.body.directions;
+  String.prototype.join = function(){return this;};
+  var ingredients = req.body.ingredient.join(', ');
+  var categories = req.body.category.join(', ');
   // Update recipe title, directions
-  db.none('UPDATE recipes SET title = $1, directions = $2;',
-    [req.body.title, req.body.directions]).
+  db.none('UPDATE recipes SET title = $1, directions = $2 WHERE id = $3;',
+    [title, directions, recipe_id]).
     then(function(){
       // Delete categories_recipes_xref
-      db.none('DELETE FROM categories_xref WHERE ')
-      // Add categories_recipes_xref
-      // Delete ingredients_recipes_xref
-      // Add ingredients and return ingredient_ids
-      // Add ingredients_recipes_xref
+      db.none('DELETE FROM categories_recipes_xref WHERE recipe_id = $1', recipe_id).
+        then(function(){
+          // Add categories_recipes_xref
+          db.none(`INSERT INTO categories_recipes_xref (recipe_id, category_id)
+            SELECT $1, x FROM UNNEST(ARRAY[$2^]) AS x`,
+            [recipe_id, categories]).
+            then(function(){
+              // Delete ingredients_recipes_xref
+              db.none('DELETE FROM ingredients_recipes_xref WHERE recipe_id = $1',
+               recipe_id).
+               then(function(){
+                 // Add ingredients and return ingredient_ids
+                 db.any(`INSERT INTO ingredients (ingredient)
+                  SELECT x FROM UNNEST(ARRAY[$1^]) AS x RETURNING id`,
+                  pgp.as.csv(ingredients)).
+                  then(function(results){
+                    var ingredient_ids = results.map(el => el.id).join(', ');
+                    // Add ingredients_recipes_xref
+                    db.none(`INSERT INTO ingredients_recipes_xref(recipe_id, ingredient_id)
+                      SELECT $1, x FROM UNNEST(ARRAY[$2^]) AS x`,
+                      [recipe_id, ingredient_ids]).
+                      then(function(){
+                        next();
+                      }).
+                      catch(function(error){
+                        console.log(error);
+                        res.status(500).send('There was a problem retrieving the data from server');
+                      });
+                  }).
+                  catch(function(error){
+                    console.log(error);
+                    res.status(500).send('There was a problem retrieving the data from server');
+                  });
+               }).
+               catch(function(error){
+                 console.log(error);
+                 res.status(500).send('There was a problem retrieving the data from server');
+               });
+            }).
+            catch(function(error){
+              console.log(error);
+              res.status(500).send('There was a problem retrieving the data from server');
+            });
+        }).
+        catch(function(error){
+          console.log(error);
+          res.status(500).send('There was a problem retrieving the data from server');
+        });
     }).
     catch(function(error){
       console.log(error);
       res.status(500).send('There was a problem retrieving the data from server');
     });
 }
->>>>>>> Stashed changes
 
 module.exports = {
   listAll: listAll,
   showRecipe: showRecipe,
   addRecipe: addRecipe,
-  deleteRecipe: deleteRecipe
+  deleteRecipe: deleteRecipe,
+  updateRecipe: updateRecipe
 };
