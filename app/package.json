@@ -4,9 +4,8 @@
   "description": "A website for people with specialized diets to share recipes",
   "main": "server.js",
   "scripts": {
-    "test": "mocha tests/**/*.js",
+    "test": "echo no tests yet",
     "start": "node server.js",
-    "test-watch": "mocha tests/**/*.js -w",
     "dropdb": "dropdb snackoverflow",
     "createdb": "createdb snackoverflow",
     "schema": "psql -d snackoverflow -f db/schema.sql",
@@ -35,8 +34,6 @@
     "pg-promise": "^3.2.3"
   },
   "devDependencies": {
-    "dotenv": "^2.0.0",
-    "mocha": "^2.4.5",
-    "supertest": "^1.2.0"
+    "dotenv": "^2.0.0"
   }
 }
