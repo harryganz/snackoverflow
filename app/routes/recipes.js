@@ -18,4 +18,8 @@ recipes.get('/:id', Recipe.showRecipe, function(req, res){
   });
 });
 
+recipes.post('/', Recipe.addRecipe, function(req, res){
+  res.send(201);
+});
+
 module.exports = recipes;

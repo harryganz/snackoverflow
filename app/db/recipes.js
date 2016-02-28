@@ -70,7 +70,62 @@ db.one(query, req.params.id).then(function(result){
 }
 
 
+function addRecipe(req, res, next){
+  var title = req.body.title;
+  var user_id = parseInt(req.body.user_id); // TODO get from session
+  var directions = req.body.directions;
+  String.prototype.join = function(){return this;};
+  var ingredients = req.body.ingredient.join(', ');
+  var categories = req.body.category.join(', ');
+
+  var ingredient_ids;
+  var recipe_id;
+  // Insert ingredients into ingredients and get ids
+  db.any(`INSERT INTO ingredients (ingredient) SELECT x FROM UNNEST(ARRAY[$1]) AS x RETURNING id;`,
+  ingredients).
+    then(function(results){
+      ingredient_ids = results.map(el => el.id).join(', ');
+      // Insert recipe into recipes and get id
+      db.one(`INSERT INTO recipes (title, directions, user_id) VALUES ($1, $2, $3) RETURNING id;`,
+      [req.body.title, req.body.directions, req.body.user_id]).
+        then(function(results){
+          recipe_id = results.id;
+          res.recipe_id = recipe_id;
+          // Insert category_ids and recipe_ids into categories_recipes_xref
+          // Must have one or more categories
+          db.none(`INSERT INTO categories_recipes_xref (recipe_id, category_id)
+          SELECT $1, x FROM UNNEST(ARRAY[$2^]) AS x;`, [recipe_id, categories]). // TODO fix raw input
+            then(function(){
+              // Insert ingredient_ids and recipe_ids into ingredients_recipes_xref
+              // Must have one or more ingredients
+              db.none(`INSERT INTO ingredients_recipes_xref (recipe_id, ingredient_id)
+              SELECT $1, x FROM UNNEST(ARRAY[$2^]) AS x;`, [recipe_id, ingredient_ids]).
+              then(function(){
+                next();
+              }).
+              catch(function(error){
+                console.log(error);
+                res.status(500).send('There was a problem retrieving the data from server 3');
+              });
+            }).
+            catch(function(error){
+              console.log(error);
+              res.status(500).send('There was a problem retrieving the data from server 4');
+            });
+        }).
+        catch(function(error){
+          console.log(error);
+          res.status(500).send('There was a problem retrieving the data from server 2');
+        });
+    }).
+    catch(function(error){
+      console.log(error);
+      res.status(500).send('There was a problem retrieving the data from server 1');
+    });
+}
+
 module.exports = {
   listAll: listAll,
-  showRecipe: showRecipe
+  showRecipe: showRecipe,
+  addRecipe: addRecipe
 };
