@@ -4,6 +4,11 @@ var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var path = require('path');
 
+// Development configuration
+if(!process.env.NODE_ENV){
+  require('dotenv').config();
+}
+
 // Configure application
 var app = express();
 app.set('views', path.join(__dirname, '/views'));
