@@ -26,4 +26,8 @@ recipes.delete('/:id', Recipe.deleteRecipe, function(req, res){
   res.redirect(303,'/recipes');
 });
 
+recipes.put('/:id', Recipe.updateRecipe, function(req, res){
+  res.redirect(303, '/recipes'+req.params.id);
+});
+
 module.exports = recipes;

@@ -156,6 +156,26 @@ function deleteRecipe(req, res, next){
     });
 }
 
+<<<<<<< Updated upstream
+=======
+function updateRecipe(req, res, next){
+  // Update recipe title, directions
+  db.none('UPDATE recipes SET title = $1, directions = $2;',
+    [req.body.title, req.body.directions]).
+    then(function(){
+      // Delete categories_recipes_xref
+      db.none('DELETE FROM categories_xref WHERE ')
+      // Add categories_recipes_xref
+      // Delete ingredients_recipes_xref
+      // Add ingredients and return ingredient_ids
+      // Add ingredients_recipes_xref
+    }).
+    catch(function(error){
+      console.log(error);
+      res.status(500).send('There was a problem retrieving the data from server');
+    });
+}
+>>>>>>> Stashed changes
 
 module.exports = {
   listAll: listAll,
