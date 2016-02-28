@@ -13,6 +13,7 @@
           <div class="card">
             <h3><%= recipe.title %></h3>
             <p>Author: <%= recipe.user %></p>
+            <p>Categories: <%= recipe.categories.join(', ') %></p>
           </div>
         </a>
       <% }) %>
