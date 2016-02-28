@@ -19,7 +19,11 @@ recipes.get('/:id', Recipe.showRecipe, function(req, res){
 });
 
 recipes.post('/', Recipe.addRecipe, function(req, res){
-  res.redirect('recipes/'+res.recipe_id);
+  res.redirect('/recipes/'+res.recipe_id);
+});
+
+recipes.delete('/:id', Recipe.deleteRecipe, function(req, res){
+  res.redirect(303,'/recipes');
 });
 
 module.exports = recipes;

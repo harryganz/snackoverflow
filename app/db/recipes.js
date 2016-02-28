@@ -105,27 +105,61 @@ function addRecipe(req, res, next){
               }).
               catch(function(error){
                 console.log(error);
-                res.status(500).send('There was a problem retrieving the data from server 3');
+                res.status(500).send('There was a problem retrieving the data from server');
               });
             }).
             catch(function(error){
               console.log(error);
-              res.status(500).send('There was a problem retrieving the data from server 4');
+              res.status(500).send('There was a problem retrieving the data from server');
             });
         }).
         catch(function(error){
           console.log(error);
-          res.status(500).send('There was a problem retrieving the data from server 2');
+          res.status(500).send('There was a problem retrieving the data from server');
         });
     }).
     catch(function(error){
       console.log(error);
-      res.status(500).send('There was a problem retrieving the data from server 1');
+      res.status(500).send('There was a problem retrieving the data from server');
     });
 }
+
+function deleteRecipe(req, res, next){
+  var recipe_id = parseInt(req.params.id);
+  // Set isShown on recipe to false
+  db.none('UPDATE recipes SET is_shown = false WHERE id = $1',
+  recipe_id).
+    then(function(){
+      // Delete categories_recipes_xref
+      db.none('DELETE FROM categories_recipes_xref WHERE recipe_id = $1',
+      recipe_id).
+        then(function(){
+          // Delete ingredients_recipes_xref
+          db.none('DELETE FROM ingredients_recipes_xref WHERE recipe_id = $1',
+          recipe_id).
+            then(function(){
+              next();
+            }).
+            catch(function(error){
+              console.log(error);
+              res.status(500).send('There was a problem retrieving the data from server');
+            });
+      }).
+      catch(function(error){
+        console.log(error);
+        res.status(500).send('There was a problem retrieving the data from server');
+      });
+    })
+    .catch(function(error){
+      console.log(error);
+      res.status(500).send('There was a problem retrieving the data from server');
+    });
+}
+
 
 module.exports = {
   listAll: listAll,
   showRecipe: showRecipe,
-  addRecipe: addRecipe
+  addRecipe: addRecipe,
+  deleteRecipe: deleteRecipe
 };
