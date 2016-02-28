@@ -19,7 +19,7 @@ recipes.get('/:id', Recipe.showRecipe, function(req, res){
 });
 
 recipes.post('/', Recipe.addRecipe, function(req, res){
-  res.send(201);
+  res.redirect('recipes/'+res.recipe_id);
 });
 
 module.exports = recipes;
