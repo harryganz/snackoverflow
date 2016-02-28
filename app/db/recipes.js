@@ -37,8 +37,40 @@ function listAll(req, res, next){
     });
 }
 
+function showRecipe(req, res, next){
+  var query = `SELECT rcat.id AS id, rcat.title AS title,
+  rcat.directions AS directions,
+  rcat.user AS user, rcat.categories AS categories,
+  ARRAY_AGG(ingredients.ingredient) AS ingredients
+  FROM (SELECT recipes.id AS id, recipes.title AS title,
+  recipes.directions AS directions, users.username AS user,
+  ARRAY_AGG(categories.category) AS categories
+  FROM recipes INNER JOIN users
+  ON users.id = recipes.user_id
+  INNER JOIN categories_recipes_xref AS crx
+  ON crx.recipe_id = recipes.id
+  INNER JOIN categories
+  ON crx.category_id = categories.id
+  WHERE recipes.id = $1 AND recipes.is_shown
+  GROUP BY recipes.id, recipes.title, recipes.directions, users.username
+) AS rcat
+INNER JOIN ingredients_recipes_xref AS irx
+ON rcat.id = irx.recipe_id
+INNER JOIN ingredients
+ON irx.ingredient_id = ingredients.id
+GROUP BY rcat.id, rcat.title, rcat.directions, rcat.user, rcat.categories;`;
+
+db.one(query, req.params.id).then(function(result){
+  res.data = result;
+  next();
+}).catch(function(error){
+  console.log(error);
+  res.status(500).send('There was a problem retrieving the data from server');
+});
+}
 
 
 module.exports = {
-  listAll: listAll
+  listAll: listAll,
+  showRecipe: showRecipe
 };

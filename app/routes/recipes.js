@@ -11,4 +11,8 @@ recipes.get('/', Recipe.listAll, function(req, res){
   });
 });
 
+recipes.get('/:id', Recipe.showRecipe, function(req, res){
+  res.json(res.data);
+});
+
 module.exports = recipes;
