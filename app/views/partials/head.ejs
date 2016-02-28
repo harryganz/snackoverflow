@@ -1,0 +1,13 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Snack Overflow <% if(typeof page_title !== 'undefined'){ %> | <%= page_title %> <% } %></title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+  <link rel="stylesheet" href="/css/shared.css">
+  <% if(typeof stylesheets !== 'undefined'){ %>
+    <% stylesheets.forEach(function(sheet){ %>
+      <link rel="stylesheet" href="/css/<%= sheet %>.css">
+    <% }) %>
+  <% } %>
+</head>

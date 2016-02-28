@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include ../partials/head.ejs %>
+<body>
+  <%- include ../partials/header.ejs %>
+  <%- include ../partials/nav.ejs %>
+  <h3><%= recipe.title %></h3>
+  <p>Author: <%= recipe.user %></p>
+  <p>Directions: <%= recipe.directions %></p>
+  <p>Categories: <%= recipe.categories.join(', ') %></p>
+  <p>Ingredients: <%= recipe.ingredients.join(', ') %></p>
+</body>
+</html>

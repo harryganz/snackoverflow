@@ -4,8 +4,13 @@
   "description": "A website for people with specialized diets to share recipes",
   "main": "server.js",
   "scripts": {
-    "test": "mocha tests/**/*.js",
-    "start": "node server.js"
+    "test": "echo no tests yet",
+    "start": "node server.js",
+    "dropdb": "dropdb snackoverflow",
+    "createdb": "createdb snackoverflow",
+    "schema": "psql -d snackoverflow -f db/schema.sql",
+    "seeddb": "psql -d snackoverflow -f db/seeds.sql",
+    "resetdb": "npm run dropdb && npm run createdb && npm run schema && npm run seeddb"
   },
   "jshintConfig": {
     "node": true,
@@ -25,9 +30,10 @@
     "body-parser": "^1.15.0",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
-    "morgan": "^1.7.0"
+    "morgan": "^1.7.0",
+    "pg-promise": "^3.2.3"
   },
   "devDependencies": {
-    "mocha": "^2.4.5"
+    "dotenv": "^2.0.0"
   }
 }
