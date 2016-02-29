@@ -23,6 +23,9 @@
             <% }) %>
           </ul>
         </li>
+        <% if(user){ %>
+          <li><a href="/recipes/new">Add Recipe</a></li>
+        <% } %>
       </ul>
       <form class="navbar-form navbar-left" role="search">
         <div class="form-group">
