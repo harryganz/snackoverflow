@@ -4,11 +4,45 @@
 <body>
   <%- include ../partials/header.ejs %>
   <%- include ../partials/nav.ejs %>
-  <h3><%= recipe.title %></h3>
-  <p>Author: <%= recipe.user %></p>
-  <p>Directions: <%= recipe.directions %></p>
-  <p>Categories: <%= recipe.categories.join(', ') %></p>
-  <p>Ingredients: <%= recipe.ingredients.join(', ') %></p>
+  <div class="container">
+    <div class="col-xs-12 col-md-3">
+    <% if(user && user.id === recipe.user_id){ %>
+      <div class="panel panel-default">
+        <div class="panel-heading">Edit Recipe</div>
+        <div class="panel-body">
+          <form action="/recipes/<%= recipe.id %>?_method=DELETE">
+            <a type="submit" >
+              <i class="fa fa-trash"></i> Delete</a>
+          </form>
+          <a href="/recipes/<%= recipe.id %>/edit">
+            <i class="fa fa-pencil"></i> Edit</a>
+        </div>
+      </div>
+      <% } %>
+      <div class="panel panel-default">
+        <div class="panel-heading">Categories</div>
+        <div class="panel-body">
+          <% recipe.categories.forEach(function(category){ %>
+            <li><%= category %></li>
+          <% }) %>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">Ingredients</div>
+        <div class="panel-body">
+          <% recipe.ingredients.forEach(function(ingredient){ %>
+            <li><%= ingredient %></li>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-9">
+      <div class="panel panel-default">
+        <div class="panel-heading lead"><%= recipe.title %></div>
+        <div class="panel-body"><%= recipe.directions %></div>
+      </div>
+    </div>
+</div>
   <%- include ../partials/scripts %>
 </body>
 </html>
