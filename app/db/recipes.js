@@ -222,10 +222,26 @@ function updateRecipe(req, res, next){
     });
 }
 
+function isOwner(req, res, next){
+  db.one('SELECT user_id FROM recipes WHERE id = $1', req.params.id).
+  then(function(result){
+    if(result.user_id === req.session.user.id){
+      next();
+    } else {
+      res.status(401).send('Unauthorized');
+    }
+  }).
+  catch(function(error){
+    console.log('there was an error making a query ', error);
+    res.send(500).send('there was an error getting data from the server');
+  });
+}
+
 module.exports = {
   listAll: listAll,
   showRecipe: showRecipe,
   addRecipe: addRecipe,
   deleteRecipe: deleteRecipe,
-  updateRecipe: updateRecipe
+  updateRecipe: updateRecipe,
+  isOwner: isOwner
 };

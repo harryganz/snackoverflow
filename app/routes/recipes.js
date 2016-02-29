@@ -31,7 +31,7 @@ recipes.get('/new', isLoggedIn, Category.listAll, function(req, res){
   });
 });
 
-recipes.get('/:id/edit', isLoggedIn, Category.listAll, Recipe.showRecipe, function(req, res){
+recipes.get('/:id/edit', isLoggedIn, Recipe.isOwner, Category.listAll, Recipe.showRecipe, function(req, res){
   res.render('recipes/edit', {
     page_title: 'Edit Recipe',
     formAction: '/recipes/'+req.params.id +'?_method=PUT',
@@ -48,15 +48,15 @@ recipes.get('/:id', Recipe.showRecipe, function(req, res){
   });
 });
 
-recipes.post('/', Recipe.addRecipe, function(req, res){
+recipes.post('/', isLoggedIn, Recipe.addRecipe, function(req, res){
   res.redirect('/recipes/'+res.recipe_id);
 });
 
-recipes.delete('/:id', Recipe.deleteRecipe, function(req, res){
+recipes.delete('/:id', isLoggedIn, Recipe.isOwner, Recipe.deleteRecipe, function(req, res){
   res.redirect(303,'/recipes');
 });
 
-recipes.put('/:id', Recipe.updateRecipe, function(req, res){
+recipes.put('/:id', isLoggedIn, Recipe.isOwner, Recipe.updateRecipe, function(req, res){
   res.redirect(303, '/recipes/'+req.params.id);
 });
 
