@@ -1,4 +1,13 @@
+@import url(https://fonts.googleapis.com/css?family=Share+Tech+Mono|Roboto);
 
+/* Typography */
+body {
+  font-family: Roboto, sans-serif;
+}
+
+h1, h2, h3 {
+  font-family: 'Share Tech Mono', sans-serif;
+}
 
 /* Header Styles */
 .page-header {
@@ -7,6 +16,9 @@
 .page-header img {
   height: 75px;
   width: 75px;
+}
+.page-header h1 {
+  font-size: 4em;
 }
 
 /* link styles */
