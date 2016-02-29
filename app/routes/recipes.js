@@ -4,6 +4,14 @@ var Recipe = require(path.join(__dirname, '../db/recipes'));
 var Category = require(path.join(__dirname, '../db/categories'));
 var recipes = require('express').Router();
 
+function isLoggedIn(req, res, next){
+  if(req.session.user){
+    next();
+  } else {
+    res.status(401).send('Unauthorized');
+  }
+}
+
 recipes.get('/', Recipe.listAll, function(req, res){
   res.render('recipes/list', {
     page_title: 'Recipes',
@@ -14,7 +22,7 @@ recipes.get('/', Recipe.listAll, function(req, res){
 
 
 
-recipes.get('/new', Category.listAll, function(req, res){
+recipes.get('/new', isLoggedIn, Category.listAll, function(req, res){
   res.render('recipes/new', {
     page_title: 'Add Recipe',
     formAction: '/recipes',
@@ -23,7 +31,7 @@ recipes.get('/new', Category.listAll, function(req, res){
   });
 });
 
-recipes.get('/:id/edit', Category.listAll, Recipe.showRecipe, function(req, res){
+recipes.get('/:id/edit', isLoggedIn, Category.listAll, Recipe.showRecipe, function(req, res){
   res.render('recipes/edit', {
     page_title: 'Edit Recipe',
     formAction: '/recipes/'+req.params.id +'?_method=PUT',

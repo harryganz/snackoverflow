@@ -20,7 +20,7 @@ users.get('/login', function(req, res){
 });
 
 users.post('/login', User.loginUser, function(req, res){
-  req.session.user = res.rows;
+  req.session.user = res.data;
 
   req.session.save(function(){
     res.redirect('/');
