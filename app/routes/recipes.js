@@ -11,6 +11,14 @@ recipes.get('/', Recipe.listAll, function(req, res){
   });
 });
 
+recipes.get('/new', function(req, res){
+  res.render('recipes/new', {
+    page_title: 'Add Recipe',
+    categories: [{id: 1, category: 'Vegan'}, {id: 2, category: 'Vegetarian'},
+    {id:3, category: 'Kosher'}, {id: 4, category: 'Peanut Allergy'}]
+  });
+});
+
 recipes.get('/:id', Recipe.showRecipe, function(req, res){
   res.render('recipes/show', {
     page_title: 'Show Recipe',
