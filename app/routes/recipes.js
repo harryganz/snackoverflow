@@ -39,6 +39,7 @@ recipes.get('/:id/edit', isLoggedIn, Recipe.isOwner, Recipe.showRecipe, function
   res.render('recipes/edit', {
     page_title: 'Edit Recipe',
     stylesheets: ['form'],
+    scripts: ['form'],
     formAction: '/recipes/'+req.params.id +'?_method=PUT',
     formMethod: 'post',
     categories: res.categories,

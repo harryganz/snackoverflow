@@ -22,10 +22,22 @@
       <div class="form-group">
         <label for="ingredient">Ingredients</label>
         <div class="ingredient">
-          <input type="text" name="ingredient" class="form-control">
+          <input type="text" name="ingredient" class="form-control"
+            <% if(typeof recipe !== 'undefined'){ %>
+              value="<%= recipe.ingredients[0] %>"
+            <% } %>
+          >
           <button class="btn btn-success add-ingredient"><i class="fa fa-plus"></i></button>
         </div>
-
+        <% if(typeof recipe !== 'undefined'){
+          for(var i = 1; i < recipe.ingredients.length; i++){ %>
+              <div class="ingredient">
+                  <input type="text" name="ingredient" class="form-control" value="<%= recipe.ingredients[i] %>">
+                  <button class="btn btn-success add-ingredient"><i class="fa fa-plus"></i></button>
+                  <button class="btn btn-danger remove-ingredient"><i class="fa fa-minus"></i></button>
+              </div>
+        <% }
+         } %>
       </div>
     </div>
   </div>

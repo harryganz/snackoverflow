@@ -1,5 +1,6 @@
 $(function(){
   $('.add-ingredient').click(addIngredient);
+  $('.remove-ingredient').click(removeIngredient);
 });
 
 function addIngredient(event){
