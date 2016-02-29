@@ -10,3 +10,21 @@
 textarea {
   width: 100%;
 }
+
+.ingredient {
+  text-align: right;
+
+}
+
+.ingredient button {
+  margin: 0.5em 0;
+  display: inline-block;
+}
+
+.remove-ingredient {
+  float: right;
+}
+
+.add-ingredient {
+  float: left;
+}

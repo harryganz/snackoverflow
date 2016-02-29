@@ -9,9 +9,9 @@ function addIngredient(event){
   // Add text input
   $newIngredient.append('<input type="text" name="ingredient" class="form-control">');
   // Add add and delete buttons
-  $newAddButton = $('<button class="add-ingredient">Add Ingredient</button>').
+  $newAddButton = $('<button class="btn btn-success add-ingredient"><i class="fa fa-plus"></i></button>').
     click(addIngredient);
-  $newDeleteButton = $('<button class="remove-ingredient">Remove Ingredient</button>').
+  $newDeleteButton = $('<button class="btn btn-danger remove-ingredient"><i class="fa fa-minus"></i></button>').
     click(removeIngredient);
   $newIngredient.append($newAddButton).append($newDeleteButton);
   // Put after current parent
