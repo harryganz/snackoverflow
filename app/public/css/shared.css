@@ -1,25 +1,9 @@
-/* Typography */
-body {
-  font-size: 16px;
-}
-
-h1 {
-  font-size: 2.5em;
-}
-
-h3 {
-  font-size: 1.5em;
-}
 
 
 /* Header Styles */
-#header img {
+.page-header img {
   height: 60px;
   width: 60px;
-}
-
-#header h1 {
-  padding-left: 0.5em;
 }
 
 /* Nav styles */
