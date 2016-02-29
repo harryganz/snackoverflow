@@ -1,6 +1,7 @@
 'use strict';
 var path = require('path');
 var Recipe = require(path.join(__dirname, '../db/recipes'));
+var Category = require(path.join(__dirname, '../db/categories'));
 var recipes = require('express').Router();
 
 recipes.get('/', Recipe.listAll, function(req, res){
@@ -13,23 +14,22 @@ recipes.get('/', Recipe.listAll, function(req, res){
 
 
 
-recipes.get('/new', function(req, res){
+recipes.get('/new', Category.listAll, function(req, res){
   res.render('recipes/new', {
     page_title: 'Add Recipe',
     formAction: '/recipes',
     formMethod: 'post',
-    categories: [{id: 1, category: 'Vegan'}, {id: 2, category: 'Vegetarian'},
-    {id:3, category: 'Kosher'}, {id: 4, category: 'Peanut Allergy'}]
+    categories: res.categories
   });
 });
 
-recipes.get('/:id/edit', function(req, res){
+recipes.get('/:id/edit', Category.listAll, Recipe.showRecipe, function(req, res){
   res.render('recipes/edit', {
     page_title: 'Edit Recipe',
     formAction: '/recipes/'+req.params.id +'?_method=PUT',
     formMethod: 'post',
-    categories: [{id: 1, category: 'Vegan'}, {id: 2, category: 'Vegetarian'},
-    {id:3, category: 'Kosher'}, {id: 4, category: 'Peanut Allergy'}]
+    categories: res.categories,
+    recipe: res.data
   });
 });
 
