@@ -4,7 +4,7 @@ var User = require(path.join(__dirname, '../db/users'));
 var users = require('express').Router();
 
 users.post('/', User.createUser, function(req, res){
-  res.redirect('/');
+  res.redirect('/users/login');
 });
 
 users.get('/new', function(req, res){
