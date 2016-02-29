@@ -2,6 +2,7 @@
 var express = require('express');
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 var path = require('path');
 
 // Development configuration
@@ -18,6 +19,7 @@ app.set('view engine', 'ejs');
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+app.use(methodOverride('_method'));
 
 // Dynamic Routes
 app.get('/', function(req, res){
