@@ -26,6 +26,7 @@ recipes.get('/', Recipe.listAll, function(req, res){
 recipes.get('/new', isLoggedIn, function(req, res){
   res.render('recipes/new', {
     page_title: 'Add Recipe',
+    stylesheets: ['form'],
     formAction: '/recipes',
     formMethod: 'post',
     categories: res.categories,
@@ -36,6 +37,7 @@ recipes.get('/new', isLoggedIn, function(req, res){
 recipes.get('/:id/edit', isLoggedIn, Recipe.isOwner, Recipe.showRecipe, function(req, res){
   res.render('recipes/edit', {
     page_title: 'Edit Recipe',
+    stylesheets: ['form'],
     formAction: '/recipes/'+req.params.id +'?_method=PUT',
     formMethod: 'post',
     categories: res.categories,
