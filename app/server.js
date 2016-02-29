@@ -30,14 +30,18 @@ app.use(session({
   resave : false,
   cookie : { maxAge : 30 * 24 * 60 * 60 * 1000 } // 30 days
 }));
-
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
+app.use(require(path.join(__dirname, '/db/categories')).listAll);
 
 // Dynamic Routes
 app.get('/', function(req, res){
-  res.render('home/index', {page_title: 'Home'});
+  res.render('home/index', {
+    page_title: 'Home',
+    categories: res.categories,
+    user: req.session.user
+  });
 });
 app.use('/recipes', require(path.join(__dirname, '/routes/recipes')));
 app.use('/users', require(path.join(__dirname, '/routes/users')));

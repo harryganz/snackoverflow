@@ -9,13 +9,17 @@ users.post('/', User.createUser, function(req, res){
 
 users.get('/new', function(req, res){
   res.render('users/signup', {
-    page_title: 'Sign Up'
+    page_title: 'Sign Up',
+    categories: res.categories,
+    user: req.session.user
   });
 });
 
 users.get('/login', function(req, res){
   res.render('users/login.ejs', {
-    page_title: 'Login'
+    page_title: 'Login',
+    categories: res.categories,
+    user: req.session.user
   });
 });
 
