@@ -27,6 +27,7 @@ recipes.get('/new', isLoggedIn, function(req, res){
   res.render('recipes/new', {
     page_title: 'Add Recipe',
     stylesheets: ['form'],
+    scripts: ['form'],
     formAction: '/recipes',
     formMethod: 'post',
     categories: res.categories,
