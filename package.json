@@ -8,9 +8,10 @@
     "start": "node server.js",
     "dropdb": "dropdb snackoverflow",
     "createdb": "createdb snackoverflow",
-    "schema": "psql -d snackoverflow -f db/schema.sql",
-    "seeddb": "psql -d snackoverflow -f db/seeds.sql",
-    "resetdb": "npm run dropdb && npm run createdb && npm run schema && npm run seeddb"
+    "schema": "psql -d $DATABASE_URL -f db/schema.sql",
+    "seeddb": "psql -d $DATABASE_URL -f db/seeds.sql",
+    "insertsessions": "psql -d $DATABASE_URL -f node_modules/connect-pg-simple/table.sql",
+    "resetdb": "npm run dropdb && npm run createdb && npm run schema && npm run seeddb && npm run insertsessions"
   },
   "jshintConfig": {
     "node": true,
