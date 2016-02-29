@@ -12,7 +12,9 @@ users.get('/new', function(req, res){
 });
 
 users.get('/login', function(req, res){
-  res.send('OK');
+  res.render('users/login.ejs', {
+    page_title: 'Login'
+  });
 });
 
 users.post('/login', User.loginUser, function(req, res){
