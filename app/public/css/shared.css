@@ -8,3 +8,21 @@
   height: 75px;
   width: 75px;
 }
+
+/* link styles */
+a, .as-link {
+  color: #24e2ff;
+  text-decoration: none;
+}
+
+a:hover, .as-link:hover {
+  color: #ffc524;
+  text-decoration: none;
+}
+
+.as-link {
+  padding: 0;
+  margin: 0;
+  background: none;
+  border: none;
+}

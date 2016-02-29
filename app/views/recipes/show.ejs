@@ -10,11 +10,11 @@
       <div class="panel panel-default">
         <div class="panel-heading">Edit Recipe</div>
         <div class="panel-body">
-          <form action="/recipes/<%= recipe.id %>?_method=DELETE">
-            <a type="submit" >
-              <i class="fa fa-trash"></i> Delete</a>
+          <form action="/recipes/<%= recipe.id %>?_method=DELETE" method="post">
+            <button type="submit" class="as-link">
+              <i class="fa fa-trash"></i> Delete</button>
           </form>
-          <a href="/recipes/<%= recipe.id %>/edit">
+          <a role="link" href="/recipes/<%= recipe.id %>/edit" >
             <i class="fa fa-pencil"></i> Edit</a>
         </div>
       </div>
