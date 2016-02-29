@@ -5,7 +5,11 @@
     <div class="panel-body">
       <div class="form-group">
         <% categories.forEach(function(category){ %>
-          <label><input type="checkbox" name="category" value="<%= category.id %>">
+          <label><input type="checkbox" name="category" value="<%= category.id %>"
+          <% if(typeof recipe !== 'undefined' && recipe.categories.some(function(el){return el === category.category})){ %>
+            checked="checked"
+          <% } %>
+            >
             <%= category.category %>
           </label>
           <% }) %>
