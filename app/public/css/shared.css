@@ -1,54 +1,10 @@
-/* Typography */
-body {
-  font-size: 16px;
-}
-
-h1 {
-  font-size: 2.5em;
-}
-
-h3 {
-  font-size: 1.5em;
-}
 
 
 /* Header Styles */
-#header img {
-  height: 60px;
-  width: 60px;
+.page-header {
+  border-bottom: none;
 }
-
-#header h1 {
-  padding-left: 0.5em;
-}
-
-/* Nav styles */
-nav {
-  background-color: #000;
-  color: #fff;
-  margin-bottom: 2em;
-}
-
-.horizontal-menu {
-  list-style: none;
-  margin: 0.75em 0;
-}
-
-.horizontal-menu li {
-  display: inline;
-}
-
-.menu-link {
-  padding: 0.5em;
-  border-radius: 5%;
-  text-decoration: none;
-  color: #fff;
-}
-
-.menu-link:hover {
-  background-color: #fff;
-}
-
-nav .button {
-  margin: 0.5em 0;
+.page-header img {
+  height: 75px;
+  width: 75px;
 }

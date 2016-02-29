@@ -1,0 +1,26 @@
+<form action="<%= formAction %>" method="<%= formMethod %>">
+  <div class="form-group">
+    <label for="title">Title:</label>
+    <input type="text" name="title">
+  </div>
+  <div class="form-group">
+    <label for="directions">Directions:</label>
+    <textarea name="directions" rows="20" cols="50"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="category">Categories:</label>
+    <% categories.forEach(function(category){ %>
+      <input type="checkbox" name="category"
+      value="<%= category.id %>"><%= category.category %></input>
+    <% }) %>
+  </div>
+  <div class="form-group">
+    <label for="ingredient">Ingredients:</label>
+    <input type="text" name="ingredient">
+  </div>
+  <div class="form-group">
+    <label for="user_id">User:</label>
+    <input name="user_id" type="text">
+  </div>
+  <input type="submit" value="submit">
+</form>
