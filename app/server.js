@@ -39,6 +39,7 @@ app.use(require(path.join(__dirname, '/db/categories')).listAll);
 app.get('/', function(req, res){
   res.render('home/index', {
     page_title: 'Home',
+    stylesheets: ['home'],
     categories: res.categories,
     user: req.session.user
   });
