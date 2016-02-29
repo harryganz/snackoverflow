@@ -13,4 +13,12 @@ Planned Features:
 * Members can set categories for their recipes
 * Members can add ingredients lists to their recipes
 * Members can see a list of their recipes
-  
+
+Implemented Features:
+
+* Guests can view recipes 
+* Members can log in
+* Members can add/edit/remove recipes 
+* Members can set categories for their recipes
+* Members can add ingredients lists to their recipes
+
