@@ -1,12 +1,15 @@
 # Snack Overflow
 
+
 ### Description
 Snack Overflow is a community of picky eaters.
 Always wanted to have a BLT but you are vegan or keep kosher? Snack overflow is the place for you.
 
 * Share recipes for people with specialized diets
 * Search for recipes by category (kosher, vegan, vegetarian, non-dairy, allergies, etc) or by ingredient
-* Join a communtiy of people facing the same dietary restrictions
+* Join a community of people facing the same dietary restrictions
+
+Live version: https://blooming-forest-16867.herokuapp.com/
 
 ### Wireframes
 
@@ -23,7 +26,7 @@ Always wanted to have a BLT but you are vegan or keep kosher? Snack overflow is 
 
 ### User Stories
 
-See the [user stories readme](planning/user_stories.md) 
+See the [user stories readme](planning/user_stories.md)
 
 
 ### Dependencies
@@ -34,13 +37,22 @@ External Dependencies:
 * npm ~ 3.7.3
 * Postgesql 9.5
 
-### Installation 
+### Installation
 
 Clone the repository, navigate to the app folder in the terminal and run:
 ```bash
-npm install 
+npm install
 ```
 This will install all the npm modules needed to run the server
+
+### Setting Up The Database
+
+Export the link to your database as DATABASE_URL.
+Run the following command in the terminal:
+```
+npm run resetdb
+```
+This will create a database called snackoverflow on your machine. This feature has only been tested on a Linux machine.
 
 ### Contributing
 
