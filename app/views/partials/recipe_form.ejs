@@ -45,10 +45,14 @@
 <div class="col-xs-12 col-md-9">
   <div class="panel panel-default">
     <div class="panel-heading lead form-group">Title:
-      <input type="text" class="form-control" name="title"></div>
+      <input type="text" class="form-control" name="title"
+        <% if(typeof recipe !== 'undefined'){ %>
+          value="<%= recipe.title %>"
+        <% } %>
+      ></div>
     <div class="panel-body form-group">
       <p><label for="directions">Directions:</label></p>
-      <textarea name="directions" rows="20"></textarea>
+      <textarea name="directions" rows="20"><% if(typeof recipe !== 'undefined'){ %><%-recipe.directions%><% } %></textarea>
     </div>
     <div class="form-group button-group">
       <a href="/" role="button" class="btn btn-danger">Cancel</a>
