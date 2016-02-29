@@ -8,7 +8,9 @@ users.post('/', User.createUser, function(req, res){
 });
 
 users.get('/new', function(req, res){
-  res.send('OK');
+  res.render('users/signup', {
+    page_title: 'Sign Up'
+  });
 });
 
 users.get('/login', function(req, res){
