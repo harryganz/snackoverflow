@@ -74,15 +74,17 @@ function addRecipe(req, res, next){
   var title = req.body.title;
   var user_id = parseInt(req.body.user_id); // TODO get from session
   var directions = req.body.directions;
-  var ingredients = req.body.ingredient;
-  var categories= req.body.category;
+  String.prototype.join = function(){return this;};
+  var ingredients = req.body.ingredient.join(', ');
+  var categories = req.body.category.join(', ');
+
   var ingredient_ids;
   var recipe_id;
   // Insert ingredients into ingredients and get ids
-  db.any(`INSERT INTO ingredients (ingredient) SELECT x FROM UNNEST(ARRAY[$1^]::text[]) AS x RETURNING id;`,
-  pgp.as.csv(ingredients)).
+  db.any(`INSERT INTO ingredients (ingredient) SELECT x FROM UNNEST(ARRAY[$1]) AS x RETURNING id;`,
+  ingredients).
     then(function(results){
-      ingredient_ids = results.map(el => el.id);
+      ingredient_ids = results.map(el => el.id).join(', ');
       // Insert recipe into recipes and get id
       db.one(`INSERT INTO recipes (title, directions, user_id) VALUES ($1, $2, $3) RETURNING id;`,
       [req.body.title, req.body.directions, req.body.user_id]).
@@ -92,33 +94,33 @@ function addRecipe(req, res, next){
           // Insert category_ids and recipe_ids into categories_recipes_xref
           // Must have one or more categories
           db.none(`INSERT INTO categories_recipes_xref (recipe_id, category_id)
-          SELECT $1, x FROM UNNEST(ARRAY[$2^]::int[]) AS x;`, [recipe_id, pgp.as.csv(categories)]).
+          SELECT $1, x FROM UNNEST(ARRAY[$2^]) AS x;`, [recipe_id, categories]). // TODO fix raw input
             then(function(){
               // Insert ingredient_ids and recipe_ids into ingredients_recipes_xref
               // Must have one or more ingredients
               db.none(`INSERT INTO ingredients_recipes_xref (recipe_id, ingredient_id)
-              SELECT $1, x FROM UNNEST(ARRAY[$2^]::int[]) AS x;`, [recipe_id, pgp.as.csv(ingredient_ids)]).
+              SELECT $1, x FROM UNNEST(ARRAY[$2^]) AS x;`, [recipe_id, ingredient_ids]).
               then(function(){
                 next();
               }).
               catch(function(error){
                 console.log(error);
-                res.status(500).send('There was a problem retrieving the data from server 1');
+                res.status(500).send('There was a problem retrieving the data from server');
               });
             }).
             catch(function(error){
               console.log(error);
-              res.status(500).send('There was a problem retrieving the data from server 2');
+              res.status(500).send('There was a problem retrieving the data from server');
             });
         }).
         catch(function(error){
           console.log(error);
-          res.status(500).send('There was a problem retrieving the data from server 3');
+          res.status(500).send('There was a problem retrieving the data from server');
         });
     }).
     catch(function(error){
       console.log(error);
-      res.status(500).send('There was a problem retrieving the data from server 4');
+      res.status(500).send('There was a problem retrieving the data from server');
     });
 }
 
@@ -158,9 +160,8 @@ function updateRecipe(req, res, next){
   var recipe_id = req.params.id;
   var title = req.body.title;
   var directions = req.body.directions;
-  String.prototype.join = function(){return this;};
-  var ingredients = req.body.ingredient.join(', ');
-  var categories = req.body.category.join(', ');
+  var ingredients = req.body.ingredient;
+  var categories = req.body.category;
   // Update recipe title, directions
   db.none('UPDATE recipes SET title = $1, directions = $2 WHERE id = $3;',
     [title, directions, recipe_id]).
@@ -170,8 +171,8 @@ function updateRecipe(req, res, next){
         then(function(){
           // Add categories_recipes_xref
           db.none(`INSERT INTO categories_recipes_xref (recipe_id, category_id)
-            SELECT $1, x FROM UNNEST(ARRAY[$2^]) AS x`,
-            [recipe_id, categories]).
+            SELECT $1, x FROM UNNEST(ARRAY[$2^]::int[]) AS x`,
+            [recipe_id, pgp.as.csv(categories)]).
             then(function(){
               // Delete ingredients_recipes_xref
               db.none('DELETE FROM ingredients_recipes_xref WHERE recipe_id = $1',
@@ -179,14 +180,14 @@ function updateRecipe(req, res, next){
                then(function(){
                  // Add ingredients and return ingredient_ids
                  db.any(`INSERT INTO ingredients (ingredient)
-                  SELECT x FROM UNNEST(ARRAY[$1^]) AS x RETURNING id`,
+                  SELECT x FROM UNNEST(ARRAY[$1^]::text[]) AS x RETURNING id`,
                   pgp.as.csv(ingredients)).
                   then(function(results){
-                    var ingredient_ids = results.map(el => el.id).join(', ');
+                    var ingredient_ids = results.map(el => el.id);
                     // Add ingredients_recipes_xref
                     db.none(`INSERT INTO ingredients_recipes_xref(recipe_id, ingredient_id)
-                      SELECT $1, x FROM UNNEST(ARRAY[$2^]) AS x`,
-                      [recipe_id, ingredient_ids]).
+                      SELECT $1, x FROM UNNEST(ARRAY[$2^]::int[]) AS x`,
+                      [recipe_id, pgp.as.csv(ingredient_ids)]).
                       then(function(){
                         next();
                       }).
